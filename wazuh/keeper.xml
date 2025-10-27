@@ -1,0 +1,17 @@
+
+<group name="keeper">
+    <!--Alert when a failed login is seen-->
+    <rule id="119011" level="10">
+        <decoded_as>keeper_audit</decoded_as>
+        <field name="audit_event">login_failure</field>
+        <field name="category">login</field>
+        <description>Keeper user [$(username)] has failed to login via [$(channel)] using [$(client_version)] with [$(result_code)] from [$(remote_address)]</description>
+    </rule>
+
+    <!--Alert when multiple failed logins are seen-->
+    <rule id="119012" level="14" frequency="3" timeframe="300">
+        <if_matched_sid>119011</if_matched_sid>
+        <description>Keeper user [$(username)] has failed multiple times to login via [$(channel)] using [$(client_version)] with [$(result_code)] from [$(remote_address)]</description>
+    </rule>
+
+</group>

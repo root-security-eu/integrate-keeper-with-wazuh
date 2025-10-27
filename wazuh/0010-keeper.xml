@@ -1,0 +1,21 @@
+<!--Parent decoder-->
+<decoder name="keeper_audit">
+  <prematch>keeper - - -</prematch>
+</decoder>
+
+<!--JSON Fields decoder-->
+<decoder name="keeper_audit_fields">
+  <parent>keeper_audit</parent>
+  <prematch>keeper - - -</prematch>
+  <plugin_decoder offset="after_parent">JSON_Decoder</plugin_decoder>
+</decoder>
+
+<!--Event timestamp decoder-->
+<decoder name="keeper_audit_fields">
+  <parent>keeper_audit</parent>
+  <regex type="pcre2">.*(\d{4}\-\d{2}\-\d{2}T\d{2}\:\d{2}\:\d{2}\.\d{3}Z)</regex>
+  <order>event_timestamp</order>
+</decoder>
+
+<!-- Why names are identical check:
+https://documentation.wazuh.com/current/user-manual/ruleset/decoders/json-decoder.html#mixing-of-plugin-decoders-with-regular-expressions -->
