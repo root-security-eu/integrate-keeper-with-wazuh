@@ -13,5 +13,28 @@
         <if_matched_sid>119011</if_matched_sid>
         <description>Keeper user [$(username)] has failed multiple times to login via [$(channel)] using [$(client_version)] with [$(result_code)] from [$(remote_address)]</description>
     </rule>
+    
+    <!-- Alert on administrative actions -->
+    <rule id="119020" level="8">
+        <decoded_as>keeper_audit</decoded_as>
+        <field name="category">account|security|policy|managed_company|msp</field>
+        <description>Keeper administrative action: [$(audit_event)] by [$(username)]</description>
+        <group>keeper,administrative,</group>
+    </rule>
 
+    <!-- Alert on external sharing -->
+    <rule id="119030" level="9">
+        <decoded_as>keeper_audit</decoded_as>
+        <field name="audit_event">ext_share_added|ext_share_removed</field>
+        <description>User [$(username)] performed [$(audit_event)] on a One-Time Share link to 'Record UID:$(app_uid)'</description>
+        <group>keeper,sharing,external,</group>
+    </rule>
+
+    <!-- Alert on vault record deletion -->
+    <rule id="119040" level="12">
+        <decoded_as>keeper_audit</decoded_as>
+        <field name="audit_event">record_delete|deleted_folder</field>
+        <description>Keeper CRITICAL: [$(username)] deleted [$(audit_event)]</description>
+        <group>keeper,deletion,critical,</group>
+    </rule>
 </group>
